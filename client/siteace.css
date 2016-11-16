@@ -1,0 +1,44 @@
+/* CSS declarations go here */
+.hidden_div{
+	display:none;
+}
+
+.navbar-brand-centered{
+	position:absolute;
+	left:50%;
+	display:block;
+	text-align:center;
+	background-color:transparent;
+	margin-left:-40px;
+}
+
+.container-float{
+	padding-top:20px;
+	padding-bottom:20px;
+	background-color:WhiteSmoke;
+}
+
+.hr-small{
+	margin-top:5px;
+	margin-bottom:10px;
+}
+
+.tumbnail-content{
+	background-color:WhiteSmoke;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+.content-right{
+	float:right;
+}
+
+.content-center{
+	float:center;
+}
+
+.content-margin-right{
+	margin-right:10px;
+}

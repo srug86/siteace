@@ -1,0 +1,196 @@
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Site Ace</title>
+</head>
+
+<body>
+
+</body>
+
+<template name="ApplicationLayout">
+	{{> yield "navbar"}}
+	{{> yield "main"}}
+</template>
+
+<template name="navbar">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand navbar-brand-centered" href="/">
+					<strong>Site Ace</strong>
+				</a>
+				{{> loginButtons}}
+			</div>
+		</div>
+	</nav>
+</template>
+
+<template name="main_view">
+	<div class="container">
+		{{#if currentUser}}
+			{{> website_form}}
+			<hr>
+		{{/if}}
+		{{> website_list}}
+	</div>
+</template>
+
+<template name="detailed_view">
+	<div class="container">
+		{{> website_detail}}
+		{{#if currentUser}}
+			<br>
+			{{> comment_form}}
+			<br>
+		{{/if}}
+		{{> comment_list}}
+	</div>
+</template>
+
+<template name="website_form">
+	<a class="btn btn-primary js-toggle-website-form" href="#">
+		Add website
+	</a>
+	<div id="website_form" class="hidden_div">
+		<div class="container container-float">
+			<form class="js-save-website-form">
+				<div class="form-group">
+					<label for="url">Site address</label>
+					<input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+				</div>
+				<div class="form-group">
+					<label for="title">Title</label>
+					<input type="text" class="form-control" id="title" placeholder="Mysite">
+				</div>
+				<div class="form-group">
+					<label for="description">Description</label>
+					<input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+				</div>
+
+				<button type="submit" class="btn btn-success">Submit</button>
+			</form>
+		</div>
+	</div>
+</template>
+
+<!-- template that displays several website items -->
+<template name="website_list">
+	<h1>Top Websites</h1>
+	<br>
+	<div class="container">
+		<ol>
+			{{#each websites}}
+				{{>website_item}}
+			{{/each}}
+		</ol>
+	</div>
+</template>
+
+<!-- template that displays individual website entries -->
+<template name="website_item">
+	<li>
+		<div class="thumbnail tumbnail-content">
+			<h3><a href="{{url}}">{{title}}</a></h3>
+			<p>
+				{{description}}
+			</p>
+			<hr class="hr-small">
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<p><small>{{createdOn}}</small></p>
+				</div>
+				<div class="col-xs-6 col-sm-6 col-md-6">
+					<div class="content-right">
+						<a href="/{{_id}}">
+							Details
+						</a>
+					</div>
+				</div>
+			</div>
+			{{#if currentUser}}
+			<a href="#" class="btn btn-success js-upvote">
+				<span class="glyphicon glyphicon-plus glyphicon-little" aria-hidden="true"></span>
+			</a>
+			<b>{{positives}}</b>
+			<a href="#" class="btn btn-danger js-downvote">
+				<span class="glyphicon glyphicon-minus glyphicon-little" aria-hidden="true"></span>
+			</a>
+			<b>{{negatives}}</b>
+			{{/if}}
+		</div>
+	</li>
+</template>
+
+<template name="website_detail">
+	<a href="/">Go Back</a>
+	<h1><a href="{{url}}">{{title}}</a></h1>
+	<br>
+	<p>
+		{{description}}
+	</p>
+	<br>
+	<hr class="hr-small">
+	<div class="row">
+		<div class="col-xs-6 col-sm-6 col-md-6">
+			{{#if currentUser}}
+			<a href="#" class="btn btn-success js-upvote">
+				<span class="glyphicon glyphicon-plus glyphicon-little" aria-hidden="true"></span>
+			</a>
+			<b>{{positives}}</b>
+			<a href="#" class="btn btn-danger js-downvote">
+				<span class="glyphicon glyphicon-minus glyphicon-little" aria-hidden="true"></span>
+			</a>
+			<b>{{negatives}}</b>
+			{{/if}}
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6">
+			<div class="content-right">
+				<p><small>{{createdOn}}</small></p>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="comment_form">
+	<a class="btn btn-primary js-toggle-website-form" href="#">
+		Add comment
+	</a>
+	<div id="comment_form" class="hidden_div">
+		<div class="container container-float">
+			<form class="js-save-website-form">
+				<div class="form-group">
+					<label for="content">Comment</label>
+					<textarea type="text" class="form-control" id="content" rows="3" placeholder="Write your comment here..."></textarea>
+				</div>
+				<button type="submit" class="btn btn-success">Submit</button>
+			</form>
+		</div>
+	</div>
+</template>
+
+<template name="comment_list">
+	<p><h2>Comments:</h2></p>
+	<ol class="list-group">
+		{{#each comments}}
+			{{> comment_item}}
+			<br>
+		{{/each}}
+	</ol>
+</template>
+
+<template name="comment_item">
+	<li class="list-group-item">
+		<h3><b>{{author}}</b></h3>
+		<p>
+			{{content}}
+		</p>
+		<hr class="hr-small">
+		<div class="row">
+			<div class="content-right content-margin-right">
+				<p><small>{{createdOn}}</small></p>
+			</div>
+		</div>
+	</li>
+</template>
